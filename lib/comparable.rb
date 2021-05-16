@@ -3,5 +3,6 @@
 # Compares nodes by data
 module Comparable
   def comparable?
+    
   end
 end

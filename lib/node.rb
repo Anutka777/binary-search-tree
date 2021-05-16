@@ -5,7 +5,7 @@ require_relative 'comparable'
 # Single node with data and 2 children
 class Node
   include Comparable
-  attr_accessor :datas, :left_child, :right_child
+  attr_accessor :data, :left_child, :right_child
 
   def initialize(data)
     @data = data
@@ -13,6 +13,3 @@ class Node
     @right_child = nil
   end
 end
-
-node = Node.new(5)
-# p node
