@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'comparable'
-
 # Single node with data and 2 children
 class Node
   include Comparable
@@ -11,5 +9,9 @@ class Node
     @data = data
     @left_child = nil
     @right_child = nil
+  end
+
+  def <=>(other)
+    data <=> other.data
   end
 end
