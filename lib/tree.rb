@@ -28,34 +28,50 @@ class Tree
     pretty_print(node.left_child, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left_child
   end
 
-  def insert(value, node = root)
-    if node.nil?
-      node = Node.new(value)
-    elsif value < node.data
-      node.left_child = insert(value, node.left_child)
-    elsif value > node.data
-      node.right_child = insert(value, node.right_child)
+  def insert(value, pointer = root)
+    if pointer.nil?
+      pointer = Node.new(value)
+    elsif value < pointer.data
+      pointer.left_child = insert(value, pointer.left_child)
+    elsif value > pointer.data
+      pointer.right_child = insert(value, pointer.right_child)
     end
-    node
+    pointer
   end
 
-  def delete(value, node = root)
-    if value < node.data
-      node.left_child = delete(value, node.left_child)
-    elsif value > node.data
-      node.right_child = delete(value, node.right_child)
-    elsif node.data == value
-      if node.left_child.nil?
-        node = node.right_child
-      elsif node.right_child.nil?
-        node = node.left_child
+  def delete(value, pointer = root)
+    if value < pointer.data
+      pointer.left_child = delete(value, pointer.left_child)
+    elsif value > pointer.data
+      pointer.right_child = delete(value, pointer.right_child)
+    elsif pointer.data == value
+      if pointer.left_child.nil?
+        pointer = pointer.right_child
+      elsif pointer.right_child.nil?
+        pointer = pointer.left_child
       else
-        leftmost_leaf = find_leftmost_leaf(node)
-        node.data = leftmost_leaf.data
-        delete(leftmost_leaf.data, node.left_child)
+        leftmost_leaf = find_leftmost_leaf(pointer)
+        pointer.data = leftmost_leaf.data
+        if pointer.left_child == leftmost_leaf
+          pointer.left_child = nil
+        else
+          delete(leftmost_leaf.data, pointer.left_child)
+        end
       end
     end
-    node
+    pointer
+  end
+
+  def find(value, pointer = root)
+    return 'No such value in the tree' if pointer.nil?
+
+    if value < pointer.data
+      find(value, pointer.left_child)
+    elsif value > pointer.data
+      find(value, pointer.right_child)
+    elsif value == pointer.data
+      pointer
+    end
   end
 
   private
