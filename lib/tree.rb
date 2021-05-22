@@ -38,4 +38,30 @@ class Tree
     end
     node
   end
+
+  def delete(value, node = root)
+    if value < node.data
+      node.left_child = delete(value, node.left_child)
+    elsif value > node.data
+      node.right_child = delete(value, node.right_child)
+    elsif node.data == value
+      if node.left_child.nil?
+        node = node.right_child
+      elsif node.right_child.nil?
+        node = node.left_child
+      else
+        leftmost_leaf = find_leftmost_leaf(node)
+        node.data = leftmost_leaf.data
+        delete(leftmost_leaf.data, node.left_child)
+      end
+    end
+    node
+  end
+
+  private
+
+  def find_leftmost_leaf(node)
+    node = node.left_child until node.left_child.nil?
+    node
+  end
 end
