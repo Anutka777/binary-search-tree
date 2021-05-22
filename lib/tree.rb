@@ -74,6 +74,19 @@ class Tree
     end
   end
 
+  def level_order(array_of_values = [], queue = [], pointer = root)
+    return if pointer.nil?
+
+    queue << pointer
+    until queue.empty?
+      pointer = queue.shift
+      array_of_values << pointer.data
+      queue << pointer.left_child unless pointer.left_child.nil?
+      queue << pointer.right_child unless pointer.right_child.nil?
+    end
+    array_of_values
+  end
+
   private
 
   def find_leftmost_leaf(node)
