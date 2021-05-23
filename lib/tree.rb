@@ -116,10 +116,40 @@ class Tree
     preorder(array_of_values, pointer.right_child)
   end
 
+  # Iteratively
+  # def height(node)
+  #   height_from_left = 0
+  #   height_from_right = 0
+  #   pointer = node
+  #   until pointer == find_leftmost_leaf(pointer)
+  #     pointer = node.left_child
+  #     height_from_left += 1
+  #   end
+  #   pointer = node
+  #   until pointer == find_rightmost_leaf(node)
+  #     pointer = pointer.right_child
+  #     height_from_left += 1
+  #   end
+  #   height_from_left >= height_from_right ? height_from_left : height_from_right
+  # end
+
+  # Recursevely
+  def height(node, height = 0)
+    return height if node.left_child.nil? && node.right_child.nil?
+
+    node.left_child.nil? ? height(node.right_child) + 1 : height(node.left_child) + 1
+  end
+
   private
 
+  # Min value of the current node branch
   def find_leftmost_leaf(node)
     node = node.left_child until node.left_child.nil?
+    node
+  end
+
+  def find_rightmost_leaf(node)
+    node = node.right_child until node.right_child.nil?
     node
   end
 end
