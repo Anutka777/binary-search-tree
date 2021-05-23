@@ -6,6 +6,7 @@ require_relative 'node'
 class Tree
   attr_accessor :root, :array
 
+  # Building a tree
   def initialize(array)
     @root = build_tree(array.sort.uniq)
   end
@@ -74,6 +75,7 @@ class Tree
     end
   end
 
+  # Array of values breadth-first order
   def level_order(array_of_values = [], queue = [], pointer = root)
     return if pointer.nil?
 
@@ -85,6 +87,33 @@ class Tree
       queue << pointer.right_child unless pointer.right_child.nil?
     end
     array_of_values
+  end
+
+  # Array of values depth-first order left-root-right
+  def inorder(array_of_values = [], pointer = root)
+    return array_of_values if pointer.nil?
+
+    inorder(array_of_values, pointer.left_child)
+    array_of_values << pointer.data
+    inorder(array_of_values, pointer.right_child)
+  end
+
+  # Array of values depth-first order left->right bottom->top
+  def postorder(array_of_values = [], pointer = root)
+    return array_of_values if pointer.nil?
+
+    postorder(array_of_values, pointer.left_child)
+    postorder(array_of_values, pointer.right_child)
+    array_of_values << pointer.data
+  end
+
+  # Array of values dept-first order top->bottom lef->right
+  def preorder(array_of_values = [], pointer = root)
+    return array_of_values if pointer.nil?
+
+    array_of_values << pointer.data
+    preorder(array_of_values, pointer.left_child)
+    preorder(array_of_values, pointer.right_child)
   end
 
   private
