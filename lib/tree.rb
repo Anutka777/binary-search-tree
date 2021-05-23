@@ -41,6 +41,8 @@ class Tree
   end
 
   def delete(value, pointer = root)
+    return p 'No such value' unless level_order.include?(value)
+
     if value < pointer.data
       pointer.left_child = delete(value, pointer.left_child)
     elsif value > pointer.data
@@ -64,7 +66,7 @@ class Tree
   end
 
   def find(value, pointer = root)
-    return 'No such value in the tree' if pointer.nil?
+    return p 'No such value in the tree' if pointer.nil?
 
     if value < pointer.data
       find(value, pointer.left_child)
@@ -135,9 +137,25 @@ class Tree
 
   # Recursevely
   def height(node, height = 0)
+    # Height is defined as the number of edges in longest path from a given node to a leaf node
+    return p 'No such node' unless level_order.include?(node.data)
+
     return height if node.left_child.nil? && node.right_child.nil?
 
     node.left_child.nil? ? height(node.right_child) + 1 : height(node.left_child) + 1
+  end
+
+  def depth(node, pointer = root, depth = 0)
+    # Depth is defined as the number of edges in path from a given node to the tree's root node
+    return p 'No such node' unless level_order.include?(node.data)
+
+    return depth if pointer == node
+
+    if pointer.data < node.data
+      depth(node, pointer.right_child, depth) + 1
+    elsif pointer.data > node.data
+      depth(node, pointer.left_child, depth) + 1
+    end
   end
 
   private
