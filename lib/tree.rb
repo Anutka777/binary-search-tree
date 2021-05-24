@@ -158,6 +158,19 @@ class Tree
     end
   end
 
+  def balanced?(pointer = root)
+    # The difference between heights of left subtree and right subtree of every node is not more than 1
+    return true if pointer.nil?
+
+    p height_from_left = height(pointer.left_child)
+    p height_from_right = height(pointer.right_child)
+    return true if (height_from_left - height_from_right).abs <= 1 &&
+                   balanced?(pointer.left_child) &&
+                   balanced?(pointer.right_child)
+
+    false
+  end
+
   private
 
   # Min value of the current node branch
