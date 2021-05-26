@@ -173,6 +173,10 @@ class Tree
     false
   end
 
+  def rebalance
+    @root = build_tree(inorder)
+  end
+
   private
 
   # Min value of the current node branch

@@ -2,10 +2,24 @@
 
 require_relative 'tree'
 
-test_tree = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
-# test_tree = Tree.new([1, 2, 3])
-
-# test_tree.insert(50)
-test_tree.insert(6)
-p test_tree
+test_tree = Tree.new(Array.new(15) { rand(1..100) })
 test_tree.pretty_print
+p test_tree.balanced?
+
+p test_tree.level_order
+p test_tree.inorder
+p test_tree.preorder
+p test_tree.postorder
+
+test_tree.insert(rand(1..100))
+test_tree.insert(rand(1..100))
+test_tree.insert(rand(1..100))
+test_tree.insert(rand(1..100))
+test_tree.insert(rand(1..100))
+test_tree.pretty_print
+p test_tree.balanced?
+
+p test_tree.inorder
+test_tree.rebalance
+test_tree.pretty_print
+p test_tree.balanced?
