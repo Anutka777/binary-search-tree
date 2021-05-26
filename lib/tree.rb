@@ -136,13 +136,15 @@ class Tree
   # end
 
   # Recursevely
-  def height(node, height = 0)
+  def height(pointer = root)
     # Height is defined as the number of edges in longest path from a given node to a leaf node
-    return p 'No such node' unless level_order.include?(node.data)
+    return -1 if pointer.nil?
 
-    return height if node.left_child.nil? && node.right_child.nil?
+    return p 'No such node' unless level_order.include?(pointer.data)
 
-    node.left_child.nil? ? height(node.right_child) + 1 : height(node.left_child) + 1
+    height_from_left = height(pointer.left_child) + 1
+    height_from_right = height(pointer.right_child) + 1
+    height_from_left > height_from_right ? height_from_left : height_from_right
   end
 
   def depth(node, pointer = root, depth = 0)
@@ -162,8 +164,8 @@ class Tree
     # The difference between heights of left subtree and right subtree of every node is not more than 1
     return true if pointer.nil?
 
-    p height_from_left = height(pointer.left_child)
-    p height_from_right = height(pointer.right_child)
+    height_from_left = height(pointer.left_child)
+    height_from_right = height(pointer.right_child)
     return true if (height_from_left - height_from_right).abs <= 1 &&
                    balanced?(pointer.left_child) &&
                    balanced?(pointer.right_child)
